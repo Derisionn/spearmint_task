@@ -1,6 +1,10 @@
 import type { Product } from '../data/products';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+let API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000/api';
+// Automatically append /api if missing (e.g. if the user only provided the render root URL)
+if (API_BASE_URL && !API_BASE_URL.endsWith('/api')) {
+  API_BASE_URL = API_BASE_URL.replace(/\/$/, '') + '/api';
+}
 
 export async function fetchProducts(): Promise<Product[]> {
   try {
